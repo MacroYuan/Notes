@@ -1,0 +1,2 @@
+Go的并发主要是使用goroutine和channel实现的。
+
