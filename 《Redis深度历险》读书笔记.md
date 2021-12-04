@@ -211,6 +211,24 @@ Redis里的set的底层结构实现就是字典，只不过所有的value都是N
 
 ## 压缩列表
 
+zset和hash容器在元素个数较少的时候采用压缩列表（ziplist）进行存储。压缩列表是一块连续的内存空间，元素之间紧挨着存储，没有任何空隙。
+
+```c
+struct ziplist<T> {
+    int32 zlbytes;		//整个压缩列表占用字节数
+    int32 zltail_offset;//最后一个元素距离压缩链表起始位置的偏移量，用于快速定位到最后一个节点
+    int16 zllength;		//元素个数
+    T[] entries;		//元素内容列表，依次紧凑存储
+    int8 zlend;			//标志压缩列表的结束，值恒为0xFF
+}
+```
+
+![](./image/ziplist.jpeg)
+
+压缩列表支持双向遍历，所以才有ztail_offset这个字段，用来快速定位最后一个元素，然后倒着遍历。
+
+
+
 ## 快速列表
 
 ## 跳表
