@@ -227,9 +227,99 @@ struct ziplist<T> {
 
 压缩列表支持双向遍历，所以才有ztail_offset这个字段，用来快速定位最后一个元素，然后倒着遍历。
 
+```c
+struct entry {
+    int<var> prevlen;		//前一个entry的字节长度
+    int<var> encoding;		//元素类型编码
+    optional byte[] content;	//元素内容
+}
+```
 
+prevlen适用于倒着遍历，能快速定位到下一个元素的位置；
+encoding字段存储了元素内容的编码类型信息，ziplist通过这个字段来决定后面的content形式；
 
 ## 快速列表
 
+在早期的Redis版本中，list的底层结构是ziplist和双向链表linkedlist，当元素少时用ziplist，当元素多时用linkedlist。后来的版本用quicklist代替了ziplist和linkedlist。
+
+quicklist是使用链表的形式将多个ziplist使用双向指针串起来。
+
+```c
+struct ziplist {
+    ...
+}
+struct ziplist_compressed {
+    int32 size;
+    byte[] compressed_data;
+}
+struct quicklistNode {
+    quicklistNode* prev;
+    quicklistNode* next;
+    ziplist* zl;		//指向压缩链表
+    int32 size;			//ziplist的字节总数
+    int16 count;		//ziplist中的元素数量
+    int2 encoding;		//存储形式为2bit，原生字节数组还是LZF压缩存储
+    ...
+}
+struct quicklist {
+    quicklistNode* head;
+    quicklistNode* tail;
+    long count;			//元素总数
+    int nodes;			//ziplist节点的个数
+    int compressDepth;	//LZF算法压缩深度
+    ...
+}
+```
+
+LZF算法用来对ziplist进行压缩存储，进一步节约空间。
+
+![](./image/quicklist.jpeg)
+
 ## 跳表
+
+![](./image/zset.jpeg)
+
+Redis的zset有两部分，一方面它需要一个hash结构来存储value和score的对应关系，另一方面需要提供按照score排序的功能，还需要能够指定score的范围来获取value列表的功能，这就需要另外一个结构——跳跃链表。
+
+```c
+struct zslnode {
+    string value;
+    double score;
+    zslnode*[] forwards;	//多层连接指针
+    zslnode* backward;		//回溯指针
+}
+
+struct zsl {
+    zslnode* header;		//跳跃链表头指针
+    int maxLevel;			//跳跃链表当前的最高层
+    map<string, zslnode*> ht;	//hash结构的所有键值对
+}
+```
+
+随机层数
+
+```c
+//新节点随机层数
+int zslRandomLevel(void) {
+    int level = 1;
+    while ((random()&0xFFFF) < (ZSKIPLIST_P * 0xFFFF))
+        level += 1;
+    return (level<ZSKIPLIST_MAXLEVEL) ? level : ZSKIPLIST_MAXLEVEL;
+}
+```
+
+## 紧凑列表
+
+listpack是Redis5.0引入新的数据结构，它是对ziplist结构的改进版。
+
+```c
+struct listpack<T> {
+    int32 total_bytes;		//占用的总字节数
+    int16 size;				//元素个数
+    T[] entries;			//紧凑排列的元素列表
+    int8 end;				//同zlend一样，恒为0xFF
+}
+```
+
+
 
