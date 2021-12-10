@@ -137,6 +137,91 @@ let s = `There are ${apples} apples in the basket`;
 console.log(s);
 ```
 
+### ...rest
+
+`...rest`可以从函数的单个参数名中提取多项，并引用它们。
+
+```js
+let f = (...items) => items.map(item => console.log(item));
+```
+
+对于传入f()这的任意参数，都直接打印它，相当于for item in items
+
+### ...spread
+
+spread与rest相反，可以从对象中提取组成部分
+
+```js
+let names = ["felix", "luna"];
+const cats = [...names, "daisy"];
+console.log(cats);		//["felix","luna","daisy"]
+```
+
 
 
 # 闭包
+
+在函数退出之后，闭包还能保留对所有局部函数变量的引用。
+
+JS允许在一个函数中定义另一个函数。
+eg.
+
+```js
+function global() {
+    function inner() {
+        console.log("inner");
+    }
+    inner();
+}
+
+global();
+```
+
+## 作用域
+
+**全局作用域**——第一次执行代码的默认环境。
+
+**函数作用域**——当执行流进入函数体时。
+
+当程序调用一个函数时，JS会创建一个新的执行上下文，在这个本地执行上下文中有自己的一些变量，仅在函数类可用。当函数执行结束时，这个本地执行上下文被销毁，其中声明的所有变量都被删除。
+
+## 函数式编程
+
+函数式编程使用闭包，其原因与面向对象编程使用私有方法类似。闭包以函数的形式为对象提供API方法。
+
+```js
+let get = null;
+
+function closure() {
+    
+    this.inc = 0;
+    get = () => this.inc;
+    function increase() {this.inc++;}
+    function decrease() {this.inc--;}
+    function set(v) {this.inc = v;}
+    function reset() {this.inc = 0;}
+    function del() {
+        delete this.inc;
+        this.inc = null;
+        console.log("this.inc deleted");
+    }
+    function readd() {
+        if (!this.inc) {
+            this.inc = "re-added";
+        }
+    }
+    return [increase, decrease, set, reset, del, readd];
+}
+```
+
+初始化闭包：
+
+```js
+let f = closure();
+```
+
+如果在一个函数中声明另一个函数，就创建了闭包。
+
+当调用的函数包含另一个函数时，就会新建执行语境，它持有所有局部变量的全新副本。通过连接到全局作用域中定义的变量名，或在外层函数中使用return关键字返回闭包，就可以在全局作用域中创建它们的引用。
+
+闭包可以持有所有局部函数变量的引用，在函数退出后仍可以使用。
