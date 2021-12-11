@@ -225,3 +225,36 @@ let f = closure();
 当调用的函数包含另一个函数时，就会新建执行语境，它持有所有局部变量的全新副本。通过连接到全局作用域中定义的变量名，或在外层函数中使用return关键字返回闭包，就可以在全局作用域中创建它们的引用。
 
 闭包可以持有所有局部函数变量的引用，在函数退出后仍可以使用。
+
+# 原型
+
+在定义函数时，会执行两个动作：一个动作是创建函数对象，这是因为函数是对象；另一个动作是创建一个完全独立的原型对象。定义的函数的原型属性将指向该原型对象。
+
+``` js
+function Human(name) {}
+typeof Human.prototype;	//"object"
+```
+
+Human.prototype将指向原型对象。该对象拥有另一个名为constructor的属性，该属性指回Human函数。
+
+
+
+# 事件
+
+# 网络请求
+
+创建XMLHttpRequest对象
+
+```js
+const Http = new XMLHttpRequest();
+```
+
+该对象拥有open方法和send方法，在调用前，需要定义端点URL：
+
+```js
+const url = "http://www.bupt.edu.cn";
+
+Http.open("GET", url);
+Http.send();
+```
+
