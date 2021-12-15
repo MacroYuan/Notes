@@ -8,6 +8,14 @@
 
 
 
+联邦学习与传统数据中心分布式训练不同基于三个方面：
+
+- 统计异质性statistical heterogeneity
+- 系统限制system constraints
+- 可信性trustworthiness
+
+
+
 联邦平均算法FedratedAveraging Algorithm：
 
 假设：同步更新方案在各轮通信中进行；有一组固定的客户端集合，大小为K，每个客户端有固定的本地数据集。

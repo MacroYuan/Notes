@@ -237,6 +237,8 @@ typeof Human.prototype;	//"object"
 
 Human.prototype将指向原型对象。该对象拥有另一个名为constructor的属性，该属性指回Human函数。
 
+原型与Java中的类继承类似。
+
 
 
 # 事件
