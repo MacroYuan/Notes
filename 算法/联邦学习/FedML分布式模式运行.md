@@ -110,3 +110,13 @@ mpirun -np $PROCESS_NUM -hostfile ./mpi_host_file python3 ./main_fedavg.py \
 分布式训练过程基于Core包的通信接口和训练接口，根据模型和分布式方法、联邦算法做相应实现在API包中，用户所需实习的`main.py`作用是综合数据集加载处理程序、模型创建程序及API包中定义好的接口，传入获取后的参数进行训练。
 
 Client进程负责加载数据集对模型进行训练，以及将训练过程中的数据通过manager类进行接收和上传数据；Server进程则不参加训练，只负责数据的同步调度。manager对数据的处理又分为client_manager和server_manager，由进程功能来定。
+
+
+
+
+
+## 问题思考
+
+- MPI通信问题
+- 实现机器学习受限于PyTorch框架
+- 由于是研究学习型框架，考虑调整代码参数方便，采用的命令行参数的形式运行，对入口进行封装
