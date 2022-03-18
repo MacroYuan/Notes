@@ -6,9 +6,9 @@ FedML-core主要有两个核心组件——**通信协议组件**与**模型训�
 
 ### ClientManager
 
-![image-20220105155731882](..\..\image\image-20220105155731882.png)
+![image-20220105155731882](..\..\..\image\image-20220105155731882.png)
 
-![](../../image/client_manager.png)
+![](../../../image/client_manager.png)
 
 在FedML中通过一个ClientManager的类进行通信管理。在ClientManager中可通过`backend`的变量参数值进行通信协议的替换，目前可选的通信协议有：
 
@@ -22,9 +22,9 @@ FedML-core主要有两个核心组件——**通信协议组件**与**模型训�
 
 ### ServerManager
 
-![](../../image/server_manager.png)
+![](../../../image/server_manager.png)
 
-![](../../image/server_manager1.png)
+![](../../../image/server_manager1.png)
 
 在ServerManage类中也是通过run()方法运行。实现方法与ClientManager一样。内部的不同仍需要看具体实现。
 
@@ -71,11 +71,11 @@ FedML编程接口的理念：提供最简单的用户体验
 
 ## 拓扑管理
 
-![](../../image/TopologyManager.png)
+![](../../../image/TopologyManager.png)
 
 对于联邦学习中的不同拓扑定义，如中心化、去中心化、分查结构，垂直结构，分片结构，FedML提供了TopologyManager的拓扑管理类接口允许用户在训练期间向任意节点成员发送消息。对于网络中的每一个trainer，都可以通过TopologyManager查询到其worker ID。
 
-![](../../image/base_topology_manager.png)
+![](../../../image/base_topology_manager.png)
 
 以上是BaseTopologyManager定义的五个接口方法，具体实现在FedML中有`SymmetricTopologyManager`类和`AsymmetricTopologyManager`类。
 

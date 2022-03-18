@@ -72,15 +72,15 @@ FedML的单机模式跟普通的机器学习一样，单机的情况下不存在
 
    通过在wandb上的日志可以看到当前模型训练的epoch过程，并且通过提前定义的一些ACC等模型评价的参数，查看当前模型的精确度。
 
-   ![](../../image/fedavg_train.png)
+   ![](../../../image/fedavg_train.png)
 
-   ![](../../image/fedavg_test.png)
+   ![](../../../image/fedavg_test.png)
 
 可以看到采用逻辑回归的当前机器学习模型ACC为81.9 。
 
 ## 尝试服务器运行
 
-![](../../image/ai1_fedavg_standalone_result.png)
+![](../../../image/ai1_fedavg_standalone_result.png)
 
 ## 问题：
 
