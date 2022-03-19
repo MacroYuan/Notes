@@ -1,0 +1,19 @@
+# Fate边缘节点服务
+
+![img](https://www.kdocs.cn/api/v3/office/copy/TFBzU1FDZUlCWE81RU1qelQ1bTJSMVNBdG41b1h0bzEvT3JOMXczalkwYVcvTVNKYkpZWW9CSlk3NVU5dlMvTGJYc2Mrb3JOOTlaRGd0bnNGaVg2b3lJaElQczJZOGZ4eVZDSDJWTE1ZOFpVZFBJblNrdkhOTEtNVnVqUEpyOHN4T0g4MTFOZ294VnhwWUZySTd5QzBEQlB1dWdxaEZleE4zUEtUeHNZSndHYlFUMFR2ck0wMEN4aEtOSXUrd3Y5WVBjdllCNkRsZVZGM0NFZ1dSVT0=/attach/object/47b63a282c9831be6645fec9b7d49c0c67a32b05) （？存疑)
+
+联邦开放服务平台目前只整合了Fate引擎的服务，从[平台设计](https://www.kdocs.cn/l/ckbbhV4lzKjK)来看边缘节点的功能主要是数据集操作和模型管理操作。所实现的接口主要有数据集的上传、编辑、下载，和模型的上传、编辑、下载和训练等过程。
+
+参考https://www.kdocs.cn/l/ckbbhV4lzKjK中的模型管理和数据管理。
+
+## 数据集操作：
+
+可对边缘节点的数据集，进行查看、搜索、创建、查看详情、查看元数据详情、修改元数据配置、导入CSV文件、编辑、删除操作。
+
+![img](https://www.kdocs.cn/api/v3/office/copy/MWYvUm4wemhPVzlEa0NYNC9ZTERKTVFOZHJjQ2doVXlEN3A5alVDUmplajRoZHp4Nk9UT2d2TFpjRDZxUjVISHBQNXhENzJlb284b3kwRXJqd1c4a2MvYWNvK2ZkZ3l4WFp6RDRlQzkzWjRFMEF6M1gvZ2c1QVVuMFVMajRUTXlqREJkZVRscktZeWlTRFJucXlkVDJzRUNzbTEyRjA4ZFRJWVdXb0JHTTh5Wm9pR2VyQW05OFNNWFJsYmtnNVkxQTB4S0xvTGNKTFUwbnZLNk9obz0=/attach/object/046f9a1d9a0e40987f19189c7e4749f0eb48291a)
+
+## 模型管理操作：
+
+
+
+![img](https://www.kdocs.cn/api/v3/office/copy/MWYvUm4wemhPVzlEa0NYNC9ZTERKTVFOZHJjQ2doVXlEN3A5alVDUmplajRoZHp4Nk9UT2d2TFpjRDZxUjVISHBQNXhENzJlb284b3kwRXJqd1c4a2MvYWNvK2ZkZ3l4WFp6RDRlQzkzWjRFMEF6M1gvZ2c1QVVuMFVMajRUTXlqREJkZVRscktZeWlTRFJucXlkVDJzRUNzbTEyRjA4ZFRJWVdXb0JHTTh5Wm9pR2VyQW05OFNNWFJsYmtnNVkxQTB4S0xvTGNKTFUwbnZLNk9obz0=/attach/object/804cd54151c42d1bb6c77e24cef2bdcfd430c973)
