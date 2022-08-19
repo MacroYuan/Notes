@@ -28,8 +28,8 @@ unique_ptr相当于一个对象，不能使用delete释放，自动管理初始�
 使用工厂函数 **make_unique()** 创建指针时强制初始化，同时还可以自动类型推导auto。
 
 make_unique()需要C++14版本，C++11需要自己实现，如下：
-```cpp
 
+```cpp
 template<class T, class... Args>
 
 std::unique_ptr<T>
@@ -43,7 +43,6 @@ my_make_unique(Args&&... args)
         new T(std::forward<Args>(args)...));
 
 }
-
 ```
 
 ### unique_ptr的所有权
@@ -64,8 +63,6 @@ assert(!ptr1 && ptr2);
 ### shared_ptr
 
 shared_ptr的所有权是可以被共享的，支持拷贝赋值，允许多个人同时持有。shared_ptr内部使用了**引用计数**。引用计数为几表示有几个人持有该智能指针，如果发生拷贝赋值——也就是共享的时候，引用计数就增加，而发生析构销毁的时候，引用计数就减少。只有当引用计数减少到 0，也就是说，没有任何人使用这个指针的时候，它才会真正调用 delete 释放内存。
-
-
 
 ### weak_ptr
 
