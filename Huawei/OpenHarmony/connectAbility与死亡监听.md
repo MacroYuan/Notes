@@ -1,0 +1,31 @@
+# connectAbility与死亡监听
+
+connect分为服务端和客户端，发起监听方定义OnConnect、OnDisconnect、OnFailed回调。在服务端ability执行Connect、Disconnect、Failed时执行对应回调。
+
+connectAbility流程参考wiki里的图
+
+## 死亡监听
+
+死亡监听处理来自于AMS中的OnAbilityDied函数，在OnAbilityDied函数中会依次执行MissionListManager、AbilityConnectManager、DataAbilityManager的OnAbilityDied方法
+
+#### missionListManager->OnAbilityDied
+
+从abilityRecord中获取mission，从missionList中移除该imission，
+
+最后通过missionListManager拉起该ability的launcher，将launcherAbility拉起至前台
+
+#### connectManager->OnAbilityDied
+
+在AbilityConnectManager处理AbilityDiedTask任务时，如果挂了的ability支持自启动，则会先移除Service中的abilityRecord，再去重新启动应用。
+
+反之则遍历abilityRecord的connectRecordList，获取list中的connectRecord，执行connectRecord的disconnect，并从list中移除该connectRecord，遍历完后从connectMap_中移除该list。处理完所有的connect后再从Service中删除abilityRecord。
+
+问题：支持自启动的应用自启动后仍保留着旧连接。
+
+#### dataAbilityManager->OnAbilityDied
+
+如果died的ability是dataAbility，对于dataAbilityReciordsMap中的该abilityRecord，调用ConnectionStateManager的服务DataAbilityDied，map擦除自身
+
+如果died的ability是数据使用方，则从所有的服务中移除该使用方
+
+最后重新启动dataAbility

@@ -54,11 +54,41 @@ HandleLoadTimeout
 
 ANR(AppNotResponce)，是指应用程序未响应。在一些事件需要在一定时间范围内完成，如果超过预定时间未能得到有效响应或响应时间过长，都会造成ANR。一般这时会弹出一个提示框，告知用户当前app未响应，用户可选择等待或强制结束。
 
-ANR与INPUT事件相关。
+###### ams的anr监听
 
-当出现ANR时，系统会调用AMS.appNotResponding()方法
+当出现ANR时，系统会调用AMS.appNotResponding()方法。
 
-AMS在初始化的时候会注册ANR监听器并放入InputManager中，并定义ANR处置器处理ANR事件。ANR事件由InputManager中的监听器触发OnAnr()，AWS处理ANR事件发送系统对话框。
+1. AMS在初始化的时候会注册ANR监听器并放入InputManager中，并定义ANR处置器处理ANR事件。ANR事件由InputManager中的监听器对象触发`OnAnr()`，调用AMS中的`SendANRProcessID(pid)`函数。
+
+2. `SendANRProcessID(pid)`函数会调用AppNoResponseDisposer对象的`DisposeAppNoResponse()`方法，处理ANR事件。
+
+3. 在AppNoResponseDisposer的`DisposeAppNoResponse()`方法中，会先获取到AppScheduler，通过AppScheduler获取到pid相关的app信息，杀死pid进程。
+
+4. 如果系统支持图像，还会显示对话框
+
+5. 最后AppNoResponseDisposer向abilitMgr线程发送杀死进程的超时任务PostTimeoutTask()
+
+##### application主线程卡死
+
+应用主线程卡死检查通过一个watchdog执行定时任务，每隔3s检测主线程状态。watchdog为主线程创建的一个子线程，watchdog内部还有一个匿名线程运行定时任务，该定时任务比较像Android中的service超时机制，
+
+1. watchdog中的匿名线程每三秒会先向watchdog线程发送一个延时3s的超时上报任务
+
+2. 该匿名线程向main thread发送查询主线程状态事件
+
+3. main thread处理该事件，向watchdog线程发送main thread存活事件
+
+4. watchdog处理main thread存活事件，及时移除1中发送的超时上报任务
+
+如果主线程响应事件超时，即步骤3超时，就不能及时阻止超时上报，认定主线程超时卡死。
+
+![](../image/2022-08-23-17-50-15-image.png)
+
+##### input超时
+
+input超时通过InputReader读取输入事件，将输入事件放入队列中，并通知处理事件。
+
+当input执行某次事件的耗时超过timeout时长，后续每一个事件检测到前一个事件超时，则作出ANR响应。
 
 #### 4. 系统死机
 

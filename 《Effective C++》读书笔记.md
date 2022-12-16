@@ -90,3 +90,47 @@ inline const Rational operator* (const Rationcal &lhs, const Rational &rhs)
 ## 32 确定你的public继承塑摸出is-a关系
 
 ## 33 避免遮掩继承而来的名称
+
+## 34 区分接口继承和实现继承
+
+## 35 考虑virtual函数以外的其他选择
+
+## 36 绝不重定义继承而来的non-virtual函数
+
+## 37 绝不重新定义继承而来的缺省参数值
+
+## 38 通过复合塑模出has-a或”根据某物实现出“
+
+## 39 明智而审慎地使用private继承
+
+## 40 明智而审慎地使用多重继承
+
+# 七、模板与泛型编程
+
+## 41 了解隐式接口和编译期多态
+
+## 42 了解typename的双重意义
+
+## 43 学习处理模板化基类内的名称
+
+## 44 将与参数无关的代码抽离templates
+
+## 45 运用成员函数模板接受所有兼容类型
+
+## 46 需要类型转换时请为模板定义非成员函数
+
+## 47 请使用traits classes表现类型信息
+
+## 48 认识template元编程
+
+# 八、定制new和delete
+
+## 49 了解new-handler的行为
+
+## 50 了解new和delete的合理替换时机
+
+## 51 编写new和delete时需要固守常规
+
+## 52 写了placement new也要写placement delete
+
+# 九、杂项讨论
