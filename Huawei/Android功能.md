@@ -1,0 +1,12 @@
+# Widget
+
+Widget是安卓中的小插件，以提供轻量便捷的轻型控件提升用户的体验。
+
+Widget由AppWidgetService服务提供，生命周期只有onReceive(又可细分为onUpdate和onEnable)，一般的AppWidgetHost的应用程序为Launcher桌面，Launcher只与AppWidgetManager进行交互而不会直接调用AppWidgetService的接口。在AppWidgetManager内部实现的调用AppWidgetService接口。Launcher从Service拿到一个Host的代理，向里面注册监听Widget事件的回调，回调事件包括updateAppWidget、providerChanged、viewDataChanged.
+
+Widget启动，Launcher通过带有Intent.action为AppWidgetManager.ACTION_APPWIDGET_PICK的StartActivityForResult来启动卡片应用。
+
+# Security
+
+
+
